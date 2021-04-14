@@ -9,22 +9,28 @@ The Thief can't pick the same item twice.
 What is the maximum worth of goods that the thief can steal?
 */
 const thiefPack = (packCap, itemValArr, itemWeightArr) => {
-  let testVal = 0;
-  let testWeight = 0;
+
   let maxVal = 0;
 
-  const helper = (arrW, arrV) => {
+  const helper = (arrW, arrV, testVal, testWeight) => {
+
     for (let i = 0; i < arrW.length; i++) {
+      // let testVal = 0;
+      // let testWeight = 0;
       const currWeight = arrW[i];
       const currVal = arrV[i];
       testVal += currVal;
       testWeight += currWeight;
+      if (testWeight > packCap) {
+        return;
+      }
       if (testWeight < packCap && testVal > maxVal) {
         maxVal = testVal;
+        helper(arrW.splice(i, 1), arrV.splice(i, 1), testVal, testWeight);
       }
     }
   };
 
-  helper(itemValArr, itemWeightArr);
+  helper(itemValArr, itemWeightArr, 0, 0);
   return maxVal;
 };
