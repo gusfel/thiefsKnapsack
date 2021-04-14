@@ -10,9 +10,21 @@ What is the maximum worth of goods that the thief can steal?
 */
 const thiefPack = (packCap, itemValArr, itemWeightArr) => {
   let testVal = 0;
+  let testWeight = 0;
   let maxVal = 0;
 
-  const helper = arr => {
-    for
+  const helper = (arrW, arrV) => {
+    for (let i = 0; i < arrW.length; i++) {
+      const currWeight = arrW[i];
+      const currVal = arrV[i];
+      testVal += currVal;
+      testWeight += currWeight;
+      if (testWeight < packCap && testVal > maxVal) {
+        maxVal = testVal;
+      }
+    }
   };
+
+  helper(itemValArr, itemWeightArr);
+  return maxVal;
 };
